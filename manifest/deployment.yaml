@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: senderservice-deployment
+  namespace: sender
+  labels:
+    app: senderservice
+spec:
+  replicas: 1 # You can scale this as needed
+  selector:
+    matchLabels:
+      app: senderservice
+  template:
+    metadata:
+      labels:
+        app: senderservice
+    spec:
+      containers:
+        - name: senderservice
+          image: praveen581348/senderservice:latest # Replace with your Docker image
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "kubernetes" # Ensure the kubernetes profile is active
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.messaging.svc.cluster.local:9092"
+          #  resources: # Optional: Define resource requests and limits
+          #    requests:
+          #      cpu: 100m
+          #      memory: 128Mi
+          #    limits:
+          #      cpu: 500m
+          #      memory: 512Mi
