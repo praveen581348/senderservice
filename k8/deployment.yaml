@@ -17,9 +17,9 @@ spec:
     spec:
       containers:
         - name: senderservice
-          image: praveen581348/senderservice:latest # Replace with your Docker image
+          image: praveen581348/senderservice:22 # Replace with your Docker image
           ports:
-            - containerPort: 8080
+            - containerPort: 8098
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "kubernetes" # Ensure the kubernetes profile is active

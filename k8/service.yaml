@@ -8,6 +8,6 @@ spec:
   selector:
     app: senderservice
   ports:
-    - port: 8080
-      targetPort: 8080
-      nodePort: 30080  # You can choose any port between 30000-32767
+    - port: 8098
+      targetPort: 8098
+      nodePort: 30098  # You can choose any port between 30000-32767
