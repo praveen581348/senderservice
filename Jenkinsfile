@@ -94,6 +94,7 @@ pipeline {
         stage('Update Helm values.yaml') {
             steps {
                 script {
+                    pwd
                     sh "./update-helm-values.sh ${BUILD_NUMBER}"
                 }
             }
