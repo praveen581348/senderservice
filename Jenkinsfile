@@ -91,6 +91,13 @@ pipeline {
                 '''
             }
         }
+        stage('Update Helm values.yaml') {
+            steps {
+                script {
+                    sh "./update-helm-values.sh ${BUILD_NUMBER}"
+                }
+            }
+        }
     }
 
     post {
