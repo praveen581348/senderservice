@@ -10,13 +10,10 @@ pipeline {
     }
 
     environment {
-        // Nexus credentials
-        NEXUS_CREDENTIALS = credentials('nexus-credentials')
-
-        // Docker Hub credentials
+        // Docker Hub credentials (used in Docker login stage)
         DOCKER_CREDENTIALS = credentials('docker-hub-creds')
 
-        // Sonar token (move to Jenkins credentials ideally)
+        // Sonar token (recommend storing in Jenkins credentials store)
         SONAR_TOKEN = 'sqa_b13073e460ec1d568c989c4a31cf0b3e993a6f6d'
     }
 
@@ -37,26 +34,38 @@ pipeline {
         stage('Setup Maven Config') {
             steps {
                 configFileProvider([configFile(fileId: '374801f3-ef12-4da7-8542-302097f1e2d3', variable: 'MAVEN_SETTINGS')]) {
-                    echo 'Maven settings configured.'
+                    echo 'Maven settings file loaded.'
                 }
             }
         }
 
         stage('Clean & Sonar Scan') {
             steps {
-                sh 'mvn  clean verify sonar:sonar -Dsonar.token=$SONAR_TOKEN -DskipTests'
+                configFileProvider([configFile(fileId: '374801f3-ef12-4da7-8542-302097f1e2d3', variable: 'MAVEN_SETTINGS')]) {
+                    sh 'mvn clean verify sonar:sonar -Dsonar.token=$SONAR_TOKEN -DskipTests --settings $MAVEN_SETTINGS'
+                }
             }
         }
 
         stage('Maven Install') {
             steps {
-                sh 'mvn  install -DskipTests'
+                configFileProvider([configFile(fileId: '374801f3-ef12-4da7-8542-302097f1e2d3', variable: 'MAVEN_SETTINGS')]) {
+                    sh 'mvn install -DskipTests --settings $MAVEN_SETTINGS'
+                }
             }
         }
 
         stage('Maven Deploy') {
             steps {
-                sh 'mvn deploy -DskipTests'
+                withCredentials([usernamePassword(
+                    credentialsId: 'nexus-credentials',
+                    usernameVariable: 'NEXUS_USERNAME',
+                    passwordVariable: 'NEXUS_PASSWORD'
+                )]) {
+                    configFileProvider([configFile(fileId: '374801f3-ef12-4da7-8542-302097f1e2d3', variable: 'MAVEN_SETTINGS')]) {
+                        sh 'mvn deploy -DskipTests --settings $MAVEN_SETTINGS'
+                    }
+                }
             }
         }
 
