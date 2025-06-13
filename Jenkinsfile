@@ -44,19 +44,19 @@ pipeline {
 
         stage('Clean & Sonar Scan') {
             steps {
-                sh 'mvn -s $MAVEN_SETTINGS clean verify sonar:sonar -Dsonar.token=$SONAR_TOKEN -DskipTests'
+                sh 'mvn  clean verify sonar:sonar -Dsonar.token=$SONAR_TOKEN -DskipTests'
             }
         }
 
         stage('Maven Install') {
             steps {
-                sh 'mvn -s $MAVEN_SETTINGS install -DskipTests'
+                sh 'mvn  install -DskipTests'
             }
         }
 
         stage('Maven Deploy') {
             steps {
-                sh 'mvn -s $MAVEN_SETTINGS deploy -DskipTests'
+                sh 'mvn deploy -DskipTests'
             }
         }
 
