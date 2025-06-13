@@ -36,7 +36,7 @@ pipeline {
 
         stage('Setup Maven Config') {
             steps {
-                configFileProvider([configFile(fileId: 'maven-settings-xml-id', variable: 'MAVEN_SETTINGS')]) {
+                configFileProvider([configFile(fileId: '374801f3-ef12-4da7-8542-302097f1e2d3', variable: 'MAVEN_SETTINGS')]) {
                     echo 'Maven settings configured.'
                 }
             }
