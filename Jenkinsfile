@@ -95,7 +95,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    pwd
+                    
                     ./update-helm-values.sh ${BUILD_NUMBER}
                 '''
                 }
