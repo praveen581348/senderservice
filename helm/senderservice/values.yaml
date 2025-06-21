@@ -6,7 +6,7 @@ app:
 
 image:
   repository: praveen581348/senderservice
-  tag: "12"
+  tag: "100"
 
 containerPort: 8098
 

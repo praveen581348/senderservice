@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: senderservice
-          image: praveen581348/senderservice:22 # Replace with your Docker image
+          image: praveen581348/senderservice:100 # Replace with your Docker image
           ports:
             - containerPort: 8098
           env:
