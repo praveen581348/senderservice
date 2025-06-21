@@ -101,6 +101,17 @@ pipeline {
                 }
             }
         }
+        stage('Update Helm values.yaml') {
+            steps {
+                script {
+                    sh '''
+                    git add .
+                    git commit -m "Tag upgrade helm"
+                    git push
+                '''
+                }
+            }
+        }
     }
 
     post {
