@@ -1,5 +1,5 @@
 # Use a base image with a Java Runtime Environment (JRE)
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app
