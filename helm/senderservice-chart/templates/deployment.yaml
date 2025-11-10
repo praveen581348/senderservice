@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "senderservice.fullname" . }}-deployment
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
+  labels:
+    # 💥 CRITICAL FIX: Use the standard Helm labels helper for ServiceMonitor compatibility
+    {{- include "senderservice.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      # 💥 CRITICAL FIX: Use the standard Helm selector labels to match the template labels
+      app.kubernetes.io/name: {{ include "senderservice.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      # We still include the 'app' label for simplicity/legacy, but rely on the Helm labels above
+      app: {{ include "senderservice.name" . }} 
+  template:
+    metadata:
+      labels:
+        # 💥 CRITICAL FIX: Ensure template labels match the selector
+        {{- include "senderservice.labels" . | nindent 8 }}
+        app: {{ include "senderservice.name" . }} # Legacy label for broad selection
+    spec:
+      containers:
+        - name: {{ include "senderservice.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          env:
+            # Range loop now includes the new SERVER_ADDRESS variable from values.yaml
+            {{- range .Values.env }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+            {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          

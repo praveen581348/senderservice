@@ -1,0 +1,29 @@
+# Application-specific values
+replicaCount: 1
+
+image:
+  repository: praveen581348/senderservice
+  tag: "23"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8098
+  targetPort: 8098
+  nodePort: 30098
+
+namespace: sender
+
+env:
+  # CRITICAL FIX: Forces the application server (Tomcat/Jetty) to listen on all interfaces.
+  - name: SERVER_ADDRESS
+    value: "0.0.0.0" 
+  
+  # Existing Environment Variables
+  - name: SPRING_PROFILES_ACTIVE
+    value: "kubernetes"
+  - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+    value: "kafka.messaging.svc.cluster.local:9092"
+  
+
+resources: {}
