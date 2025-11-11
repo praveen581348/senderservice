@@ -63,7 +63,7 @@
 	<distributionManagement>
 		<repository>
 			<id>sender</id>  <!-- this matches settings.xml -->
-			<url>http://172.23.54.137:30081/repository/sender/</url>
+			<url>http://nexus-service.artifactory.svc.cluster.local:8081/repository/sender/</url>
 		</repository>
 	  </distributionManagement>
 	<build>
