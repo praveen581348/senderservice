@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # === CONFIGURATION ===
-VALUES_FILE="helm/senderservice/values.yaml"
+VALUES_FILE="helm/senderservice-chart/values.yaml"
 NEW_IMAGE_TAG=$1
 
 if [ -z "$NEW_IMAGE_TAG" ]; then
