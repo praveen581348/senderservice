@@ -62,11 +62,11 @@
 	</dependencies>
 	<distributionManagement>
 		<repository>
-			<id>receiver</id>  <!-- this matches settings.xml -->
+			<id>sender</id>  <!-- this matches settings.xml -->
 			<url>http://nexus-service.artifactory.svc.cluster.local:8081/repository/sender/</url>
 		</repository>
         <snapshotRepository>
-    <id>receiver</id>
+    <id>sender</id>
     <name>Receiver Nexus Snapshot Repository</name>
     <url>http://nexus-service.artifactory.svc.cluster.local:8081/repository/sender/</url>
   </snapshotRepository>
