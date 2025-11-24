@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Use a base image with a Java Runtime Environment (JRE)
 FROM eclipse-temurin:17-jdk-jammy
 
@@ -95,4 +94,3 @@ USER root
 # 10. Start via our DIND entrypoint
 # -----------------------------
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
->>>>>>> f71b68a (initial commit)
