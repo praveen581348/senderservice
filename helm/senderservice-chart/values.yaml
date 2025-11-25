@@ -3,7 +3,7 @@ replicaCount: 1
 
 image:
   repository: praveen581348/senderservice
-  tag: "11"
+  tag: "9"
   pullPolicy: IfNotPresent
 
 service:
